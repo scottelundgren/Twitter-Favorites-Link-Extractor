@@ -4,7 +4,7 @@ require 'csv'
 
 Dotenv.load
 
-begin
+#begin
 
   client = Twitter::REST::Client.new do |config|
     config.consumer_key        = ENV['CONSUMER_KEY']
@@ -16,7 +16,7 @@ begin
   # an index
   cur_page = 1
   # by default twitter retrieves the 20 most recent
-  fav_page = 20
+  fav_page = 5
   max_page = client.user.favorites_count/fav_page
 
   while (cur_page < max_page)
@@ -44,11 +44,14 @@ begin
         }
         client.unfavorite(f.id)
       end
+    end
   end
   cur_page += 1
-rescue Twitter::Error::TooManyRequests => error
-  # from https://github.com/sferik/twitter/blob/master/examples/RateLimiting.md
-  puts "Rate Limit Exceeded. Sleeping..."
-  sleep error.rate_limit.reset_in + 1
-  retry
-end
+# gave up on getting this to work
+#
+# from https://github.com/sferik/twitter/blob/master/examples/RateLimiting.md
+#rescue Twitter::Error::TooManyRequests => error
+#  puts "Rate Limit Exceeded. Sleeping..."
+#  sleep error.rate_limit.reset_in + 1
+#  retry
+#end
