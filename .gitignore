@@ -1,0 +1,4 @@
+# RubyMine settings
+.idea
+# "production" settings
+.env
